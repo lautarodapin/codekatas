@@ -9,3 +9,6 @@ The rules:
 - Have fun! its an order :P
 
 
+Sites with examples
+https://www.cyber-dojo.org
+http://codekata.com/
