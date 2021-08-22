@@ -6,27 +6,36 @@ from dataclasses import dataclass
 from typing import *
 
 @dataclass
+class StateValue:
+    number: int
+    string: str
+
+@dataclass
 class Coordinate:
     i: int
     j: int
 
 
 class State(Enum):
-    start = 1
-    empty = 0
-    end = 2
-    obstacle = 3
-    path = 4
+    start = StateValue(1, 'o')
+    empty = StateValue(0, ' ')
+    end = StateValue(2, 'X')
+    obstacle = StateValue(3, '|')
+    path = StateValue(3, 'o')
 
     @classmethod
     def int_to_state(cls, number: int):
-        return rsl[0] if len(rsl:=[state for state in State if state.value == number]) > 0 else None
+        return rsl[0] if len(rsl:=[state for state in State if state.value.number == number]) > 0 else None
 
 mapa = [
     [1, 3 , 0, 0,  0],
     [0, 3 , 0, 0,  2],
-    [0, 0 , 0, 0,  0],
+    [3, 0 , 0, 0,  0],
 ]
+
+
+# %%
+State.start.value
 
 
 # %%
@@ -97,7 +106,7 @@ class Mapa:
         rsl = ''
         for row in self.mapa:
             for cell in row:
-                rsl += f'{cell.state}\t'
+                rsl += f'{cell.state.value.string}'
             rsl += '\n'
         return rsl
     
@@ -111,12 +120,6 @@ class Mapa:
             return rsl
         except IndexError:
             return None
-
-
-    def print(self):
-        for row in self.mapa:
-            print([cell.state.value for cell in row])
-        print('\n')
 
     def calculate(self, nodo: Nodo) -> Optional[Nodo]:
         surroundings = [
@@ -146,6 +149,14 @@ class Mapa:
 # %%
 a = Mapa(mapa)
 a.resolve()
+
+
+# %%
+
+
+
+# %%
+
 
 
 # %%
