@@ -25,7 +25,7 @@ class RomanToDecimal:
         except IndexError:
             return None
 
-    def __iter__(self) -> Iterable[]:
+    def __iter__(self) -> Iterator[Tuple[int, Optional[int]]]:
         for i, curr in enumerate(self.number_list):
             yield curr, self[i+1] 
 
@@ -53,7 +53,7 @@ class DecimalToRoman:
     def __repr__(self) -> str:
         return f'{self.number} = {self.roman_number}'
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Tuple[int, str]]:
         for k, v in reversed(self.numbers.items()):
             yield k, v
 
