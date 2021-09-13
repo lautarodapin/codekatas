@@ -1,6 +1,6 @@
 import pytest
 from collections import namedtuple
-from roman_numbers import RomanToDecimal, DecimalToRoman
+from roman_numbers import RomanToDecimal, DecimalToRoman, RomanToDecimal2
 
 RomanToDecimalTest = namedtuple('RomanToDecimalTest', 'roman_number number')
 
@@ -14,6 +14,11 @@ def test_decimal_to_roman():
     for test_value in TEST_VALUES:
         result = DecimalToRoman(test_value.number)
         assert result.roman_number == test_value.roman_number
+
+def test_roman_to_decimal_2():
+    for test_value in TEST_VALUES:
+        result = RomanToDecimal2(test_value.roman_number)
+        assert len(result) == test_value.number
 
 TEST_VALUES = [
     RomanToDecimalTest('I', 1),
@@ -31,5 +36,6 @@ TEST_VALUES = [
     RomanToDecimalTest('XXXVII', 37),
     RomanToDecimalTest('CIV', 104),
     RomanToDecimalTest('M', 1000),
+    RomanToDecimalTest('MM', 2000),
     RomanToDecimalTest('MMMCMXCIX', 3999),
 ]

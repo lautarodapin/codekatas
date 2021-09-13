@@ -73,6 +73,38 @@ DecimalToRoman(49)
 
 
 # %%
+class RomanToDecimal2:
+    letters: Dict[str, int] = dict(i=1, iv=4, v=5, ix=9, x=10, xl=40, l=50, xc=90, c=100, cd=400, d=500, cm=900, m=1000)
 
+    def __init__(self, roman_number: str) -> None:
+        self.roman_number = roman_number.lower()
+        self.resolve()
 
+    def __repr__(self) -> str:
+        return str(self)
 
+    def __str__(self) -> str:
+        return f'{self.roman_number.upper()} = {self.result}'
+
+    def __iter__(self) -> Iterator[Tuple[Optional[str], str, Optional[str]]]:
+        for i, curr in enumerate(self.roman_number):
+            yield self[i-1], curr, self[i+1] 
+
+    def __getitem__(self, index) -> Optional[str]:
+        try:
+            if index >= 0:
+                return self.roman_number[index]
+        except IndexError:
+            return None
+
+    def resolve(self) -> int:
+        string = ''
+        for previous_letter, letter, next_letter in self:
+            if letter and next_letter and letter + next_letter in self.letters:
+                continue
+            if previous_letter and letter and previous_letter + letter in self.letters:
+                string += 'i' * self.letters[previous_letter + letter]
+                continue
+            string += 'i' * self.letters[letter]
+        self.result = len(string)
+        return self.result
